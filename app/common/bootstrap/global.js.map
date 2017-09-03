@@ -1,0 +1,12 @@
+{
+    "version": 3,
+    "sources": [
+        "../../../src/common/bootstrap/global.js"
+    ],
+    "names": [],
+    "mappings": ";;AAIA;;;;;;AAEA,OAAO,SAAP,GAAmB;AACjB,eAAa,CADI;AAEjB,sBAAoB,CAFH;AAGjB,gBAAc,CAHG;AAIjB,aAAW,CAJM;AAKjB,cAAY,CALK;AAMjB,iBAAe,CANE;AAOjB,eAAa,CAPI;AAQjB,gBAAc,CARG;AASjB,cAAY,CATK;AAUjB,eAAa,CAVI;AAWjB,oBAAkB,CAXD;AAYjB,kBAAgB,CAZC;AAajB,iBAAe;AAbE,CAAnB;;;;;;;;;;AAoBA,UAAU,WAAV,GAAwB,KAAxB;AACA,IAAG;AACD,MAAI,gBAAgB,MAAM,SAAN,GAAkB,MAAM,GAAxB,GAA8B,YAAlD;AACA,MAAG,aAAG,UAAH,IAAiB,aAAG,UAAH,CAAc,aAAd,EAA6B,aAAG,IAAhC,CAApB,EAA0D;AACxD,cAAU,WAAV,GAAwB,IAAxB;AACD;AACD,MAAG,aAAG,UAAH,CAAc,aAAd,CAAH,EAAgC;AAC9B,cAAU,WAAV,GAAwB,IAAxB;AACD;AACF,CARD,CAQC,OAAM,CAAN,EAAQ,CAAE;;;;;;AAMX,UAAU,YAAV,GAAyB,YAAM;AAC7B,YAAU,WAAV,GAAwB,IAAxB;AACA,MAAI,gBAAgB,MAAM,SAAN,GAAkB,MAAM,GAAxB,GAA8B,YAAlD;AACA,eAAG,aAAH,CAAiB,aAAjB,EAAgC,WAAhC;AACD,CAJD",
+    "file": "../../../src/common/bootstrap/global.js",
+    "sourcesContent": [
+        "/**\n * this file will be loaded before server started\n * you can define global functions used in controllers, models, templates\n */\nimport fs from 'fs';\n\nglobal.firekylin = {\n  POST_PUBLIC: 1,\n  POST_ALLOW_COMMENT: 1,\n  POST_ARTICLE: 0,\n  POST_PAGE: 1,\n  POST_DRAFT: 0,\n  POST_AUDITING: 1,\n  POST_REJECT: 2,\n  POST_PUBLISH: 3,\n  USER_ADMIN: 1,\n  USER_EDITOR: 2,\n  USER_CONTRIBUTOR: 3,\n  USER_AVAILABLE: 1,\n  USER_DISABLED: 2\n}\n\n/**\n * is installed\n * @type {Boolean}\n */\nfirekylin.isInstalled = false;\ntry{\n  let installedFile = think.ROOT_PATH + think.sep + '.installed';\n  if(fs.accessSync && fs.accessSync(installedFile, fs.F_OK)){\n    firekylin.isInstalled = true;\n  }\n  if(fs.existsSync(installedFile)){\n    firekylin.isInstalled = true;\n  }\n}catch(e){}\n\n/**\n * set app is installed\n * @return {[type]} [description]\n */\nfirekylin.setInstalled = () => {\n  firekylin.isInstalled = true;\n  let installedFile = think.ROOT_PATH + think.sep + '.installed';\n  fs.writeFileSync(installedFile, 'firekylin');\n}\n"
+    ]
+}

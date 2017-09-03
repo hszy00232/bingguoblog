@@ -1,0 +1,12 @@
+{
+    "version": 3,
+    "sources": [
+        "../../../src/home/model/tag.js"
+    ],
+    "names": [],
+    "mappings": "AAAA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;gLAME,Q,GAAW;AACT,gBAAU;AACR,cAAM,MAAM,KAAN,CAAY,QADV;AAER,eAAO;AAFC;AADD,K;;;;;;;;mBAWL,U;;UACA,I;;;;;;qBAAa,KAAK,aAAL,E;;;AAAb,kB;+CACG,KAAK,KAAL,CAAW,CAAX,EAAc,CAAd,C;;;;;;;;;;;;;;;;;mBAGH,a;;UACA,I;;;;;;qBAAa,KAAK,MAAL,E;;;AAAb,kB;;AACJ,qBAAO,KAAK,GAAL,CAAS,gBAAQ;AACtB,qBAAK,KAAL,GAAa,KAAK,QAAL,CAAc,MAA3B;AACA,uBAAO,IAAP;AACD,eAHM,EAGJ,IAHI,CAGC,UAAC,CAAD,EAAI,CAAJ,EAAU;AAChB,uBAAO,EAAE,KAAF,GAAU,EAAE,KAAZ,GAAoB,CAAC,CAArB,GAAyB,CAAhC;AACD,eALM,CAAP;gDAMO,I;;;;;;;;;;;;;;;;;;EA1BkB,MAAM,KAAN,CAAY,Q",
+    "file": "../../../src/home/model/tag.js",
+    "sourcesContent": [
+        "'use strict';\n/**\n * model\n */\nexport default class extends think.model.relation {\n\n  relation = {\n    post_tag: {\n      type: think.model.HAS_MANY,\n      field: 'tag_id'\n    }\n  };\n\n  /**\n   * get hot tags\n   * @return {} []\n   */\n  async getHotTags(){\n    let data = await this.getTagArchive();\n    return data.slice(0, 5);\n  }\n\n  async getTagArchive(){\n    let data = await this.select();\n    data = data.map(item => {\n      item.count = item.post_tag.length;\n      return item;\n    }).sort((a, b) => {\n      return a.count > b.count ? -1 : 1;\n    })\n    return data;\n  }\n}"
+    ]
+}

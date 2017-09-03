@@ -1,0 +1,12 @@
+{
+    "version": 3,
+    "sources": [
+        "../../../../src/common/config/locale/en.js"
+    ],
+    "names": [],
+    "mappings": "AAAA;;;kBAEe;AACb,kBAAgB,CAAC,GAAD,EAAM,KAAN,CADH;AAEb,cAAY,CAAC,GAAD,EAAM,QAAN,CAFC;AAGb,sBAAoB,CAAC,GAAD,EAAM,MAAN,CAHP;AAIb,gBAAc,CAAC,GAAD,EAAM,MAAN,CAJD;AAKb,cAAY,CAAC,GAAD,EAAM,QAAN,CALC;AAMb,iBAAe,CAAC,GAAD,EAAM,WAAN,CANF;AAOb,cAAY,CAAC,GAAD,EAAM,eAAN,CAPC;AAQb,aAAW,CAAC,GAAD,EAAM,eAAN,CARE;AASb,yBAAuB,CAAC,GAAD,EAAM,SAAN,CATV;AAUb,gCAA8B,CAAC,GAAD,EAAM,0BAAN,CAVjB;AAWb,wBAAsB,CAAC,GAAD,EAAM,YAAN;AAXT,C",
+    "file": "../../../../src/common/config/locale/en.js",
+    "sourcesContent": [
+        "'use strict';\n\nexport default {\n  USER_NOT_LOGIN: [403, '未登录'],\n  USER_EXIST: [100, '用户已经存在'],\n  USER_NO_PERMISSION: [101, '没有权限'],\n  PARAMS_ERROR: [102, '参数错误'],\n  DATA_EMPTY: [103, '数据不能为空'],\n  ACCOUNT_ERROR: [104, '用户名或者密码错误'],\n  CATE_EXIST: [105, '分类名称或者缩略名已经存在'],\n  TAG_EXIST: [106, '标签名称或者缩略名已经存在'],\n  TWO_FACTOR_AUTH_ERROR: [107, '两步校验码错误'],\n  TWO_FACTOR_AUTH_ERROR_DETAIL: [107, '两步校验码错误，请确认校验码或服务器时间是否正确'],\n  APP_KEY_SECRET_ERROR: [108, '推送公钥或者私钥错误']\n};"
+    ]
+}

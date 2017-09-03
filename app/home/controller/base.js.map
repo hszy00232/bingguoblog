@@ -1,0 +1,12 @@
+{
+    "version": 3,
+    "sources": [
+        "../../../src/home/controller/base.js"
+    ],
+    "names": [],
+    "mappings": "AAAA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;mBAQE,I,iBAAK,I,EAAK;AACR,oCAAM,IAAN,YAAW,IAAX;;AAEA,SAAK,cAAL,QAAyB,MAAM,SAA/B,GAA2C,MAAM,GAAjD,YAA2D,MAAM,GAAjE,YAA2E,MAAM,GAAjF;AACD,G;;;;;;mBAIK,Q;;UAQA,K,EACA,O,EAKA,K,EAIA,O;;;;;oBAjBD,KAAK,IAAL,CAAU,MAAV,KAAqB,S;;;;;;;;kBAGpB,UAAU,W;;;;;+CACL,KAAK,QAAL,CAAc,gBAAd,C;;;AAGL,mB,GAAQ,KAAK,KAAL,CAAW,SAAX,C;;qBACQ,MAAM,UAAN,E;;;AAAhB,qB;;AACJ,mBAAK,OAAL,GAAe,OAAf;AACA,mBAAK,MAAL,CAAY,SAAZ,EAAuB,OAAvB;;;AAGI,mB,GAAQ,QAAQ,KAAR,IAAiB,W;;AAC7B,mBAAK,eAAL,QAA0B,MAAM,SAAhC,GAA4C,MAAM,GAAlD,WAA2D,MAAM,GAAjE,aAA4E,MAAM,GAAlF,GAAwF,KAAxF,GAAgG,MAAM,GAAtG;;;AAGI,qB,GAAU,KAAK,OAAL,CAAa,Q;;AAC3B,kBAAG,CAAC,OAAJ,EAAY;AACV,0BAAU,YAAY,KAAK,IAAL,CAAU,IAAhC;AACD;AACD,mBAAK,MAAL,CAAY,UAAZ,EAAwB,OAAxB;;AAEA,mBAAK,MAAL,CAAY,aAAZ,EAA4B,IAAI,IAAJ,EAAD,CAAW,WAAX,EAA3B;;;;;;;;;;;;;;;;;;;;;;;mBAOF,W,wBAAY,I,EAAK;AACf,WAAO,KAAK,OAAL,CAAa,KAAK,eAAL,GAAuB,IAAvB,GAA8B,OAA3C,CAAP;AACD,G;;;EA/C0B,MAAM,UAAN,CAAiB,I",
+    "file": "../../../src/home/controller/base.js",
+    "sourcesContent": [
+        "'use strict';\n\nexport default class extends think.controller.base {\n  /**\n   * init\n   * @param  {[type]} http [description]\n   * @return {[type]}      [description]\n   */\n  init(http){\n    super.init(http);\n    //home view path\n    this.HOME_VIEW_PATH = `${think.ROOT_PATH}${think.sep}view${think.sep}home${think.sep}`;\n  }\n  /**\n   * some base method in here\n   */\n  async __before(){\n    if(this.http.action === 'install'){\n      return;\n    }\n    if(!firekylin.isInstalled){\n      return this.redirect('/index/install');\n    }\n    \n    let model = this.model('options');\n    let options = await model.getOptions();\n    this.options = options;\n    this.assign('options', options);\n\n    //set theme view root path\n    let theme = options.theme || 'firekylin';\n    this.THEME_VIEW_PATH = `${think.ROOT_PATH}${think.sep}www${think.sep}theme${think.sep}${theme}${think.sep}`;\n\n    //网站地址\n    let siteUrl = this.options.site_url;\n    if(!siteUrl){\n      siteUrl = 'http://' + this.http.host;\n    }\n    this.assign('site_url', siteUrl);\n\n    this.assign('currentYear', (new Date).getFullYear());\n  }\n  /**\n   * display view page\n   * @param  {} name []\n   * @return {}      []\n   */\n  displayView(name){\n    return this.display(this.THEME_VIEW_PATH + name + '.html');\n  }\n}"
+    ]
+}

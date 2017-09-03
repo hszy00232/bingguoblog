@@ -1,0 +1,12 @@
+{
+    "version": 3,
+    "sources": [
+        "../../../../src/admin/controller/api/page.js"
+    ],
+    "names": [],
+    "mappings": "AAAA;;;;;;;;;;;;;;;;;;;;;;;;AAEA;;;;;;;;;;;;;;;;;;gJAGE,a,GAAgB,MAAK,aAAL,CAAmB,WAAnB,CAA+B,MAA/B,EAAuC,KAAvC,CAA6C,EAAC,MAAM,CAAP,EAA7C,C;;;mBAEhB,S,sBAAU,I,EAAK;AACb,SAAK,aAAL,CAAmB,KAAnB,CAAyB,SAAzB,EAAoC,IAApC,CAA0C,KAAK,GAAL,CAAS,MAAT,CAA1C,EAA4D,EAA5D;AACA,WAAO,gBAAM,aAAN,YAAoB,IAApB,CAAP;AACD,G;;mBAEK,U;;UACA,I,EAGA,I,EAUA,Q;;;;;AAbA,kB,GAAO,KAAK,IAAL,E;;;;;qBAGM,KAAK,aAAL,CAAmB,KAAnB,CAAyB,EAAC,UAAU,KAAK,QAAhB,EAAzB,EAAoD,MAApD,E;;;AAAb,kB;;oBACA,KAAK,MAAL,GAAc,C;;;;;+CACT,KAAK,IAAL,CAAU,gBAAV,C;;;;AAGT,mBAAK,OAAL,GAAe,KAAK,QAAL,CAAc,EAA7B;AACA,qBAAO,KAAK,oBAAL,CAA0B,IAA1B,CAAP;AACA,qBAAO,KAAK,WAAL,CAAiB,IAAjB,CAAP;AACA,mBAAK,IAAL,GAAY,CAAZ;;;qBAEqB,KAAK,aAAL,CAAmB,OAAnB,CAA2B,IAA3B,C;;;AAAjB,sB;+CACG,KAAK,OAAL,CAAa,EAAC,IAAI,QAAL,EAAb,C;;;;;;;;;;;;;;;;;mBAGH,S;;UAIA,I,EAMA,I;;;;;kBATC,KAAK,E;;;;;gDACD,KAAK,IAAL,CAAU,cAAV,C;;;AAEL,kB,GAAO,KAAK,IAAL,E;;AACX,mBAAK,EAAL,GAAU,KAAK,EAAf;AACA,mBAAK,IAAL,GAAY,CAAZ;AACA,qBAAO,KAAK,oBAAL,CAA0B,IAA1B,CAAP;AACA,qBAAO,KAAK,WAAL,CAAiB,IAAjB,CAAP;;;qBAEiB,KAAK,aAAL,CAAmB,QAAnB,CAA4B,IAA5B,C;;;AAAb,kB;gDACG,KAAK,OAAL,CAAa,EAAC,cAAc,IAAf,EAAb,C",
+    "file": "../../../../src/admin/controller/api/page.js",
+    "sourcesContent": [
+        "'use strict';\n\nimport Post from './post';\n\nexport default class extends Post {\n  modelInstance = this.modelInstance.setRelation('user').where({type: 1});\n\n  getAction(self){\n    this.modelInstance.order('id DESC').page( this.get('page'), 20 );\n    return super.getBaseAction(self);\n  }\n\n  async postAction(){\n    let data = this.post();\n\n    //check pathname\n    let post = await this.modelInstance.where({pathname: data.pathname}).select();\n    if( post.length > 0 ) {\n      return this.fail('PATHNAME_EXIST');\n    }\n\n    data.user_id = this.userInfo.id;\n    data = this.getContentAndSummary(data);\n    data = this.getPostTime(data);\n    data.type = 1;\n\n    let insertId = await this.modelInstance.addPost(data);\n    return this.success({id: insertId});\n  }\n\n  async putAction(){\n    if (!this.id) {\n      return this.fail('PARAMS_ERROR');\n    }\n    let data = this.post();\n    data.id = this.id;\n    data.type = 1;\n    data = this.getContentAndSummary(data);\n    data = this.getPostTime(data);\n\n    let rows = await this.modelInstance.savePost(data);\n    return this.success({affectedRows: rows});\n  }\n\n}\n"
+    ]
+}

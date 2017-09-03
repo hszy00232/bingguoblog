@@ -1,0 +1,12 @@
+{
+    "version": 3,
+    "sources": [
+        "../../../../src/admin/controller/api/base.js"
+    ],
+    "names": [],
+    "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAcE,kBAAY,IAAZ,EAAiB;AAAA;;AAAA,+DACf,iCAAM,IAAN,CADe;;AAAA,UANjB,SAMiB,GANL,CAAC,cAAD,EAAiB,eAAjB,CAMK;;AAEf,UAAK,OAAL,GAAe,QAAf;AAFe;AAGhB;;;;;;;;;;;;mBAKK,Q;;UACA,Q,EAKA,I,EAGE,M,EAIA,I;;;;;;qBAZe,KAAK,OAAL,CAAa,UAAb,C;;;;;;;;;;4BAA4B,E;;;AAA7C,sB;;mBACD,MAAM,OAAN,CAAc,QAAd,C;;;;;+CACM,KAAK,IAAL,CAAU,gBAAV,C;;;AAET,mBAAK,QAAL,GAAgB,QAAhB;AACI,kB,GAAO,SAAS,IAAT,GAAgB,C;;;oBAExB,SAAS,C;;;;;AACN,oB,GAAS,KAAK,IAAL,CAAU,M;;oBACpB,WAAW,K;;;;;;;;AAGV,kB,GAAO,KAAK,IAAL,CAAU,UAAV,GAAuB,GAAvB,GAA6B,KAAK,IAAL,CAAU,M;;oBAC/C,KAAK,SAAL,CAAe,OAAf,CAAuB,IAAvB,IAA+B,CAAC,C;;;;;;;;+CAG5B,KAAK,IAAL,CAAU,oBAAV,C;;;;;;;;;;;;;;;;;;EApCgB,MAAM,UAAN,CAAiB,I",
+    "file": "../../../../src/admin/controller/api/base.js",
+    "sourcesContent": [
+        "/**\n * base rest controller\n */\nexport default class extends think.controller.rest {\n  /**\n   * allow list for user\n   * @type {Array}\n   */\n  allowList = ['api/post/put', 'api/post/post'];\n  /**\n   * [constructor description]\n   * @param  {[type]} http [description]\n   * @return {[type]}      [description]\n   */\n  constructor(http){\n    super(http);\n    this._method = 'method';\n  }\n  /**\n   * before\n   * @return {} []\n   */\n  async __before(){\n    let userInfo = await this.session('userInfo') || {};\n    if(think.isEmpty(userInfo)){\n      return this.fail('USER_NOT_LOGIN');\n    }\n    this.userInfo = userInfo;\n    let type = userInfo.type | 0;\n    //not admin\n    if(type !== 1){\n      let action = this.http.action;\n      if(action === 'get'){\n        return;\n      }\n      let name = this.http.controller + '/' + this.http.action;\n      if(this.allowList.indexOf(name) > -1){\n        return;\n      }\n      return this.fail('USER_NO_PERMISSION');\n    }\n  }\n}\n"
+    ]
+}

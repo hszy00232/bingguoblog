@@ -1,0 +1,12 @@
+{
+    "version": 3,
+    "sources": [
+        "../../../src/admin/controller/base.js"
+    ],
+    "names": [],
+    "mappings": "AAAA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;mBAMQ,Q;;UAEA,I,EAIA,Q;;;;;AAJA,kB,GAAO,KAAK,I;;oBACb,KAAK,UAAL,KAAoB,MAApB,IAA8B,KAAK,MAAL,KAAgB,O;;;;;;;;;qBAG5B,KAAK,OAAL,CAAa,UAAb,C;;;;;;;;;;4BAA4B,E;;;AAA7C,sB;;mBACD,MAAM,OAAN,CAAc,QAAd,C;;;;;mBACE,KAAK,MAAL,E;;;;;+CACM,KAAK,IAAL,CAAU,WAAV,C;;;AAGX,mBAAK,QAAL,GAAgB,QAAhB;AACA,kBAAG,CAAC,KAAK,MAAL,EAAJ,EAAkB;AAChB,qBAAK,MAAL,CAAY,UAAZ,EAAwB,EAAC,IAAI,SAAS,EAAd,EAAkB,MAAM,SAAS,IAAjC,EAAuC,MAAM,SAAS,IAAtD,EAAxB;AACD;;;;;;;;;;;;;;;;;;;;;;mBAMG,M;;UAIA,K,EACA,O;;;;;mBAJD,KAAK,MAAL,E;;;;;gDACM,KAAK,IAAL,CAAU,kBAAV,C;;;AAEL,mB,GAAQ,KAAK,KAAL,CAAW,SAAX,C;;qBACQ,MAAM,UAAN,E;;;AAAhB,qB;;;AAEJ,sBAAQ,eAAR,GAA0B,CAAC,CAAC,QAAQ,eAApC;AACA,sBAAQ,YAAR,GAAuB,OAAO,QAAQ,YAAf,CAAvB;AACA,qBAAO,QAAQ,UAAf,C;AACA,mBAAK,MAAL,CAAY,SAAZ,EAAuB,OAAvB;gDACO,KAAK,OAAL,CAAa,aAAb,C;;;;;;;;;;;;;;;;;;EApCkB,MAAM,UAAN,CAAiB,I",
+    "file": "../../../src/admin/controller/base.js",
+    "sourcesContent": [
+        "'use strict';\n\nexport default class extends think.controller.base {\n  /**\n   * before\n   */\n  async __before(){\n\n    let http = this.http;\n    if(http.controller === 'user' && http.action === 'login'){\n      return;\n    }\n    let userInfo = await this.session('userInfo') || {};\n    if(think.isEmpty(userInfo)){\n      if(this.isAjax()){\n        return this.fail('NOT_LOGIN');\n      }\n    }\n    this.userInfo = userInfo;\n    if(!this.isAjax()){\n      this.assign('userInfo', {id: userInfo.id, name: userInfo.name, type: userInfo.type});\n    }\n  }\n  /**\n   * call magic method\n   * @return {} []\n   */\n  async __call(){\n    if(this.isAjax()){\n      return this.fail('ACTION_NOT_FOUND');\n    }\n    let model = this.model('options');\n    let options = await model.getOptions();\n    //不显示具体的密钥\n    options.two_factor_auth = !!options.two_factor_auth;\n    options.analyze_code = escape(options.analyze_code);\n    delete options.push_sites; //不显示推送的配置，会有安全问题\n    this.assign('options', options);\n    return this.display('index/index');\n  }\n}\n"
+    ]
+}

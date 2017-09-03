@@ -1,0 +1,12 @@
+{
+    "version": 3,
+    "sources": [
+        "../../../../src/admin/controller/api/system.js"
+    ],
+    "names": [],
+    "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;AAAA;;;;AAEA;;;;AACA;;;;;;;;;;;;;;mBAKE,I,iBAAK,I,EAAM;AACT,oBAAM,IAAN,YAAW,IAAX;;AAEA,SAAK,aAAL,GAAqB,KAAK,KAAL,CAAW,SAAX,CAArB;AACD,G;;mBAEK,S;;UAEA,K,EAEA,I;;;;;;qBAFc,KAAK,aAAL,CAAmB,KAAnB,CAAyB,6BAAzB,C;;;AAAd,mB;AAEA,kB,GAAO;AACT,6BAAa,QAAQ,QAAR,CAAiB,IADrB;AAET,2BAAW,QAAQ,QAAR,CAAiB,EAFnB;AAGT,0BAAU,QAAQ,QAHT;AAIT,gCAAgB,MAAM,OAJb;AAKT,kCAAkB,kBAAK,OALd;AAMT,8BAAc,MAAM,CAAN,EAAS;AANd,e;4BASJ,I;4BACK,I;;qBACI,KAAK,SAAL,E;;;;;qBAEC,KAAK,KAAL,CAAW,MAAX,EAAmB,KAAnB,E;;;;;qBACA,KAAK,KAAL,CAAW,MAAX,EAAmB,KAAnB,E;;;;;qBACG,KAAK,KAAL,CAAW,MAAX,EAAmB,GAAnB,CAAuB,aAAvB,C;;;;;AAFhB,qB;AACA,qB;AACA,wB;;;AALF,wB;AACA,sB;AACA,qB;;2DAHU,O;;;;;;;;;;;;;;;;;mBAYR,S;;UACA,K,EACA,U;;;;;;qBADc,KAAK,aAAL,CAAmB,MAAnB,E;;;AAAd,mB;AACA,wB,GAAa,E;;;AAEjB,oBAAM,OAAN,CAAc;AAAA,uBAAQ,WAAW,KAAK,GAAhB,IAAuB,KAAK,KAApC;AAAA,eAAd;;gDAEO,U",
+    "file": "../../../../src/admin/controller/api/system.js",
+    "sourcesContent": [
+        "import moment from 'moment';\n\nimport base from './base';\nimport pack from '../../../../package.json';\n\n\nexport default class extends base {\n\n  init(http) {\n    super.init(http);\n\n    this.modelInstance = this.model('options');\n  }\n\n  async getAction() {\n\n    let mysql = await this.modelInstance.query('SELECT VERSION() as version');\n\n    let data = {\n      nodeVersion: process.versions.node,\n      v8Version: process.versions.v8,\n      platform: process.platform,\n      thinkjsVersion: think.version,\n      firekylinVersion: pack.version,\n      mysqlVersion: mysql[0].version\n    };\n\n    return this.success({\n      versions: data,\n      config: await this.getConfig(),\n      count: {\n        posts: await this.model('post').count(),\n        cates: await this.model('cate').count(),\n        comments: await this.model('post').sum('comment_num')\n      }\n    });\n  }\n\n\n  async getConfig() {\n    let items = await this.modelInstance.select();\n    let siteConfig = {};\n\n    items.forEach(item => siteConfig[item.key] = item.value);\n\n    return siteConfig;\n  }\n\n}\n"
+    ]
+}

@@ -1,0 +1,12 @@
+{
+    "version": 3,
+    "sources": [
+        "../../../src/common/config/route.js"
+    ],
+    "names": [],
+    "mappings": "AAAA;;;kBAEe;AACb,SAAO;AACL,SAAK;AADA,GADM;AAIb,QAAM;AAJO,C",
+    "file": "../../../src/common/config/route.js",
+    "sourcesContent": [
+        "'use strict';\n\nexport default {\n  admin: {\n    reg: /^admin/\n  },\n  home: {\n    \n  }\n}"
+    ]
+}

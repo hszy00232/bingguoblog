@@ -1,0 +1,12 @@
+{
+    "version": 3,
+    "sources": [
+        "../../../src/common/config/db.js"
+    ],
+    "names": [],
+    "mappings": "AAAA;;;;;;;kBAKe;AACb,QAAM,OADO;AAEb,WAAS;AACP,WAAO;AACL,YAAM,WADD;AAEL,YAAM,EAFD;AAGL,gBAAU,WAHL;AAIL,YAAM,MAJD;AAKL,gBAAU,MALL;AAML,cAAQ,KANH;AAOL,gBAAU,oBAPL;AAQL,cAAQ,wBAAU;AAChB,eAAO,MAAP;AACD;AAVI,KADA;AAaP,WAAO;AAbA;AAFI,C",
+    "file": "../../../src/common/config/db.js",
+    "sourcesContent": [
+        "'use strict';\n/**\n * db config\n * @type {Object}\n */\nexport default {\n  type: 'mysql',\n  adapter: {\n    mysql: {\n      host: '127.0.0.1',\n      port: '',\n      database: 'firekylin',\n      user: 'root',\n      password: 'root',\n      prefix: 'fk_',\n      encoding: 'UTF8MB4_GENERAL_CI',\n      parser: config => {\n        return config;\n      }\n    },\n    mongo: {\n      \n    }\n  }\n};"
+    ]
+}

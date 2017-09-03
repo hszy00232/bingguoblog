@@ -1,0 +1,12 @@
+{
+    "version": 3,
+    "sources": [
+        "../../../src/admin/model/cate.js"
+    ],
+    "names": [],
+    "mappings": "AAAA;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAEA;;;;;;;;;;;;;;;;;;;;;;;;mBAUE,I,mBAAa;AAAA;;AAAA,sCAAL,IAAK;AAAL,UAAK;AAAA;;AACX,4CAAM,IAAN,iDAAc,IAAd;;AAEA,SAAK,QAAL,GAAgB;AACd,iBAAW;AACT,cAAM,MAAM,KAAN,CAAY,QADT;AAET,cAAM;AAFG;AADG,KAAhB;AAMD,G;;;;;;;;;mBAOD,O,oBAAQ,I,EAAK;AACX,QAAI,QAAQ;AACV,YAAM,KAAK,IADD;AAEV,cAAQ;AAFE,KAAZ;AAIA,QAAG,KAAK,QAAR,EAAiB;AACf,YAAM,QAAN,GAAiB,KAAK,QAAtB;AACD;AACD,WAAO,KAAK,KAAL,CAAW,KAAX,EAAkB,OAAlB,CAA0B,IAA1B,CAAP;AACD,G;;mBAEK,Q;0FAAS,I;UACT,I;;;;;;qBAAa,KAAK,KAAL,CAAW,EAAC,IAAI,KAAK,EAAV,EAAX,EAA0B,IAA1B,E;;;AAAb,kB;;mBACD,MAAM,OAAN,CAAc,IAAd,C;;;;;+CACM,kBAAQ,MAAR,CAAe,IAAI,KAAJ,CAAU,gBAAV,CAAf,C;;;+CAGF,KAAK,KAAL,CAAW,EAAC,IAAI,KAAK,EAAV,EAAX,EAA0B,MAA1B,CAAiC,IAAjC,C;;;;;;;;;;;;;;;;;mBAGH,U;2FAAW,O;;;;;AACf,mBAAK,KAAL,CAAW,WAAX,EAAwB,KAAxB,CAA8B,EAAC,gBAAD,EAA9B,EAAyC,MAAzC;gDACO,KAAK,KAAL,CAAW,EAAC,IAAI,OAAL,EAAX,EAA0B,MAA1B,E;;;;;;;;;;;;;;;;;;;;;;;mBAOT,Q,qBAAS,M,EAAO;AACd,QAAG,MAAH,EAAU;AACR,aAAO,KAAK,KAAL,CAAW,EAAC,SAAS,MAAV,EAAX,EAA8B,KAA9B,EAAP;AACD;AACD,WAAO,KAAK,KAAL,EAAP;AACD,G",
+    "file": "../../../src/admin/model/cate.js",
+    "sourcesContent": [
+        "'use strict';\n\nimport Base from './base';\n/**\n * relation model\n */\nexport default class extends Base {\n  /**\n   * init\n   * @param  {} args []\n   * @return {}         []\n   */\n  init(...args){\n    super.init(...args);\n\n    this.relation = {\n      post_cate: {\n        type: think.model.HAS_MANY,\n        fKey: 'cate_id'\n      }\n    }\n  }\n\n  /**\n   * 添加分类\n   * @param {[type]} data [description]\n   * @param {[type]} ip   [description]\n   */\n  addCate(data){\n    let where = {\n      name: data.name,\n      _logic: 'OR'\n    };\n    if(data.pathname){\n      where.pathname = data.pathname;\n    }\n    return this.where(where).thenAdd(data);\n  }\n\n  async saveCate(data){\n    let info = await this.where({id: data.id}).find();\n    if(think.isEmpty(info)){\n      return Promise.reject(new Error('CATE_NOT_EXIST'));\n    }\n\n    return this.where({id: data.id}).update(data);\n  }\n\n  async deleteCate(cate_id) {\n    this.model('post_cate').where({cate_id}).delete();\n    return this.where({id: cate_id}).delete();\n  }\n  /**\n   * get count posts\n   * @param  {Number} userId []\n   * @return {Promise}        []\n   */\n  getCount(userId){\n    if(userId){\n      return this.where({user_id: userId}).count();\n    }\n    return this.count();\n  }\n}\n"
+    ]
+}

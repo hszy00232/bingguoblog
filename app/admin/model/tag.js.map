@@ -1,0 +1,12 @@
+{
+    "version": 3,
+    "sources": [
+        "../../../src/admin/model/tag.js"
+    ],
+    "names": [],
+    "mappings": "AAAA;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAEA;;;;;;;;;;;;;;;;;;;;;;;;mBAUE,I,mBAAa;AAAA;;AAAA,sCAAL,IAAK;AAAL,UAAK;AAAA;;AACX,4CAAM,IAAN,iDAAc,IAAd;;AAEA,SAAK,QAAL,GAAgB;AACd,gBAAU;AACR,cAAM,MAAM,KAAN,CAAY,QADV;AAER,cAAM;AAFE;AADI,KAAhB;AAMD,G;;mBAED,M,mBAAO,I,EAAK;AACV,QAAI,QAAQ;AACV,YAAM,KAAK,IADD;AAEV,cAAQ;AAFE,KAAZ;AAIA,QAAG,KAAK,QAAR,EAAiB;AACf,YAAM,QAAN,GAAiB,KAAK,QAAtB;AACD;AACD,WAAO,KAAK,KAAL,CAAW,KAAX,EAAkB,OAAlB,CAA0B,IAA1B,CAAP;AACD,G;;mBAEK,O;0FAAQ,I;UACR,I;;;;;;qBAAa,KAAK,KAAL,CAAW,EAAC,IAAI,KAAK,EAAV,EAAX,EAA0B,IAA1B,E;;;AAAb,kB;;mBACD,MAAM,OAAN,CAAc,IAAd,C;;;;;+CACM,kBAAQ,MAAR,CAAe,IAAI,KAAJ,CAAU,eAAV,CAAf,C;;;+CAGF,KAAK,KAAL,CAAW,EAAC,IAAI,KAAK,EAAV,EAAX,EAA0B,MAA1B,CAAiC,IAAjC,C;;;;;;;;;;;;;;;;;mBAGH,S;2FAAU,M;;;;;AACd,mBAAK,KAAL,CAAW,UAAX,EAAuB,KAAvB,CAA6B,EAAC,cAAD,EAA7B,EAAuC,MAAvC;gDACO,KAAK,KAAL,CAAW,EAAC,IAAI,MAAL,EAAX,EAAyB,MAAzB,E",
+    "file": "../../../src/admin/model/tag.js",
+    "sourcesContent": [
+        "'use strict';\n\nimport Base from './base';\n/**\n * relation model\n */\nexport default class extends Base {\n  /**\n   * init\n   * @param  {} args []\n   * @return {}         []\n   */\n  init(...args){\n    super.init(...args);\n\n    this.relation = {\n      post_tag: {\n        type: think.model.HAS_MANY,\n        fKey: 'tag_id'\n      }\n    }\n  }\n\n  addTag(data){\n    let where = {\n      name: data.name,\n      _logic: 'OR'\n    };\n    if(data.pathname){\n      where.pathname = data.pathname;\n    }\n    return this.where(where).thenAdd(data);\n  }\n\n  async saveTag(data){\n    let info = await this.where({id: data.id}).find();\n    if(think.isEmpty(info)){\n      return Promise.reject(new Error('TAG_NOT_EXIST'));\n    }\n\n    return this.where({id: data.id}).update(data);\n  }\n\n  async deleteTag(tag_id) {\n    this.model('post_tag').where({tag_id}).delete();\n    return this.where({id: tag_id}).delete();\n  }\n}\n"
+    ]
+}

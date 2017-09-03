@@ -1,0 +1,12 @@
+{
+    "version": 3,
+    "sources": [
+        "../../../src/admin/logic/user.js"
+    ],
+    "names": [],
+    "mappings": "AAAA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;mBAWE,W,0BAAa,CAEZ,C;;;;;;;mBAKD,U,yBAAY;AACV,SAAK,YAAL,GAAoB,MAApB;AACA,SAAK,KAAL,GAAa,EAAb;AAGD,G;;;;;;;mBAKD,W,0BAAa;AACX,SAAK,YAAL,GAAoB,UAApB;AACA,QAAG,KAAK,KAAL,EAAH,EAAgB;AACd;AACD;AACD,SAAK,KAAL,GAAa;AACX,gBAAU;AACR,kBAAU,IADF;AAER,mBAAW;AAFH,OADC;AAKX,gBAAU;AACR,kBAAU,IADF;AAER,gBAAQ,CAAC,EAAD,EAAK,EAAL;AAFA,OALC;AASX,cAAQ;AACN,gBAAQ;AADF;AATG,KAAb;AAaD,G;;;EAxC0B,MAAM,KAAN,CAAY,I",
+    "file": "../../../src/admin/logic/user.js",
+    "sourcesContent": [
+        "'use strict';\n/**\n * logic\n * @param  {} []\n * @return {}     []\n */\nexport default class extends think.logic.base {\n  /**\n   * index action logic\n   * @return {} []\n   */\n  indexAction(){\n   \n  }\n  /**\n   * 添加或者修改用户\n   * @return {} []\n   */\n  saveAction(){\n    this.allowMethods = 'post';\n    this.rules = {\n      \n    }\n  }\n  /**\n   * login\n   * @return {} []\n   */\n  loginAction(){\n    this.allowMethods = 'get,post';\n    if(this.isGet()){\n      return;\n    }\n    this.rules = {\n      username: {\n        required: true,\n        minLength: 4\n      },\n      password: {\n        required: true,\n        length: [32, 32]\n      },\n      factor: {\n        regexp: /^\\d{6}$/\n      }\n    }\n  }\n}"
+    ]
+}

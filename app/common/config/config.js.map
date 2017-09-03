@@ -1,0 +1,12 @@
+{
+    "version": 3,
+    "sources": [
+        "../../../src/common/config/config.js"
+    ],
+    "names": [],
+    "mappings": "AAAA;;;;AACA;;;;;;AACA,IAAI,aAAJ;AACA,IAAI,WAAW,MAAM,SAAN,GAAkB,MAAM,GAAxB,GAA8B,MAA7C;AACA,IAAG,MAAM,MAAN,CAAa,QAAb,CAAH,EAA0B;AACxB,SAAO,aAAG,YAAH,CAAgB,QAAhB,EAA0B,MAA1B,CAAP;AACD;;;;kBAIc;AACb,QAAM,QAAQ,IADD;AAEb,gBAAc;AAFD,C",
+    "file": "../../../src/common/config/config.js",
+    "sourcesContent": [
+        "'use strict';\nimport fs from 'fs';\nlet port;\nlet portFile = think.ROOT_PATH + think.sep + 'port';\nif(think.isFile(portFile)){\n  port = fs.readFileSync(portFile, 'utf8');\n}\n/**\n * config\n */\nexport default {\n  port: port || 8360,\n  resource_reg: /^(static\\/|theme\\/|[^\\/]+\\.(?!js|html|xml)\\w+$)/\n};"
+    ]
+}

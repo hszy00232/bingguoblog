@@ -1,0 +1,12 @@
+{
+    "version": 3,
+    "sources": [
+        "../../../src/admin/model/page.js"
+    ],
+    "names": [],
+    "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;;;;;;;;;;;;;;;;;;gJAGE,S,GAAY,M;;;mBAEZ,O,oBAAQ,I,EAAK;AACX,QAAI,cAAc,MAAM,QAAN,EAAlB;AACA,WAAO,sBAAc;AACnB,YAAM,CADa;AAEnB,cAAQ,CAFW;AAGnB,8BAHmB;AAInB,mBAAa,WAJM;AAKnB,iBAAW;AALQ,KAAd,EAMJ,IANI,CAAP;;AAQA,WAAO,KAAK,KAAL,CAAW,EAAC,UAAU,KAAK,QAAhB,EAA0B,QAAQ,IAAlC,EAAX,EAAoD,OAApD,CAA4D,IAA5D,CAAP;AACD,G;;mBAEK,Q;0FAAS,I;UACT,I;;;;;;qBAAa,KAAK,KAAL,CAAW,EAAC,IAAI,KAAK,EAAV,EAAc,MAAM,CAApB,EAAX,EAAmC,IAAnC,E;;;AAAb,kB;;mBACD,MAAM,OAAN,CAAc,IAAd,C;;;;;+CACM,kBAAQ,MAAR,CAAe,IAAI,KAAJ,CAAU,gBAAV,CAAf,C;;;;AAGT,mBAAK,WAAL,GAAmB,MAAM,QAAN,EAAnB;+CACO,KAAK,KAAL,CAAW,EAAC,IAAI,KAAK,EAAV,EAAX,EAA0B,MAA1B,CAAiC,IAAjC,C",
+    "file": "../../../src/admin/model/page.js",
+    "sourcesContent": [
+        "import Post from './post';\n\nexport default class extends Post {\n  tableName = 'post';\n\n  addPost(data){\n    let create_time = think.datetime();\n    data = Object.assign({\n      type: 1,\n      status: 0,\n      create_time,\n      update_time: create_time,\n      is_public: 1\n    }, data);\n\n    return this.where({pathname: data.pathname, _logic: 'OR'}).thenAdd(data);\n  }\n\n  async savePost(data){\n    let info = await this.where({id: data.id, type: 1}).find();\n    if(think.isEmpty(info)){\n      return Promise.reject(new Error('PAGE_NOT_EXIST'));\n    }\n\n    data.update_time = think.datetime();\n    return this.where({id: data.id}).update(data);\n  }\n\n}\n"
+    ]
+}

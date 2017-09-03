@@ -1,0 +1,12 @@
+{
+    "version": 3,
+    "sources": [
+        "../../../src/home/config/route.js"
+    ],
+    "names": [],
+    "mappings": ";;;;;;kBAGe,CACb,CAAC,QAAD,EAAW,0BAAX,CADa,EAEb,CAAC,WAAD,EAAc,cAAd,CAFa,EAGb,CAAC,aAAD,EAAgB,mBAAhB,CAHa,EAIb,CAAC,aAAD,EAAgB,kBAAhB,CAJa,EAKb,CAAC,OAAD,EAAU,UAAV,CALa,EAMb,CAAC,QAAD,EAAW,0BAAX,CANa,EAOb,CAAC,MAAD,EAAS,WAAT,CAPa,EAQb,CAAC,UAAD,EAAa,eAAb,CARa,EASb,CAAC,SAAD,EAAY,aAAZ,CATa,EAUb,CAAC,gBAAD,EAAmB,uBAAnB,CAVa,EAWb,CAAC,gBAAD,EAAmB,cAAnB,CAXa,EAYb,CAAC,gBAAD,EAAmB,yBAAnB,CAZa,C",
+    "file": "../../../src/home/config/route.js",
+    "sourcesContent": [
+        "/**\n * route\n */\nexport default [\n  [/^about/, 'post/page?pathname=about'],\n  [/^archives/, 'post/archive'],\n  [/^cate\\/(.+)/, 'post/list?cate=:1'],\n  [/^tags\\/(.+)/, 'post/list?tag=:1'],\n  [/^tags/, 'post/tag'],\n  [/^links/, 'post/page?pathname=links'],\n  [/^rss/, 'index/rss'],\n  [/^sitemap/, 'index/sitemap'],\n  [/^search/, 'post/search'],\n  [/^page\\/([^/]+)/, 'post/page?pathname=:1'],\n  [/^post\\/sitemap/, 'post/sitemap'],\n  [/^post\\/([^/]+)/, 'post/detail?pathname=:1']  \n];"
+    ]
+}
